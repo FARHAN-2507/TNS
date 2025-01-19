@@ -1,0 +1,27 @@
+/* Navbar.css */
+.navbar {
+    font-family: 'Poppins', sans-serif; /* Modern font style */
+    font-size: 1rem;
+    z-index: 1030; /* Ensure it's above other content */
+  }
+  
+  .navbar-logo {
+    height: 50px; /* Adjust logo height */
+    width: auto; /* Maintain aspect ratio */
+  }
+  
+  .nav-link {
+    font-size: 1rem; /* Slightly larger font */
+    font-weight: 600;
+      color: #555; /* Neutral color */
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    color: #979696; /* Purple hover effect */
+  }
+  
+  .shadow-sm {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  }
+  
