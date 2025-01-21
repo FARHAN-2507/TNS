@@ -9,6 +9,7 @@ import BookAppointment from './pages/BookAppointment';
 import AdminDashboard from './pages/AdminDashboard';
 import Home from './pages/home';
 
+
 function App() {
   return (
     <Router>
