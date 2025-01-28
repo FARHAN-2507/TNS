@@ -1,42 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function AdminDashboard() {
-  const [appointments, setAppointments] = useState([]);
+const AdminDashboard = () => {
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      const response = await axios.get('http://localhost:5000/api/appointments/today');
-      setAppointments(response.data);
-    };
-
-    fetchAppointments();
-  }, []);
+  const sections = [
+    {
+      title: "Today's Appointments",
+      description: "View, add, delete, or fetch appointments for a specific date.",
+      color: "primary",
+      path: "/appointments",
+    },
+    {
+      title: "Manage Staff Attendance",
+      description: "View, add, delete, or fetch staff attendance records.",
+      color: "secondary",
+      path: "/staffattendancecard",
+    },
+    {
+      title: "Manage Services",
+      description: "Add, update, or delete services offered.",
+      color: "success",
+      path: "/services",
+    },
+  ];
 
   return (
     <div className="container mt-5">
-      <h2>Admin Dashboard</h2>
-      <h3>Today's Appointments</h3>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Service</th>
-            <th>User</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {appointments.map((appointment) => (
-            <tr key={appointment._id}>
-              <td>{appointment.serviceName}</td>
-              <td>{appointment.userName}</td>
-              <td>{appointment.date}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <h1 className="text-center mb-4">Admin Dashboard</h1>
+      <div className="row">
+        {sections.map((section, index) => (
+          <div key={index} className="col-md-4">
+            <div
+              className={`card bg-${section.color} text-white`}
+              onClick={() => navigate(section.path)}
+              style={{ cursor: "pointer" }}
+            >
+              <div className="card-body">
+                <h5 className="card-title">{section.title}</h5>
+                <p className="card-text">{section.description}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default AdminDashboard;

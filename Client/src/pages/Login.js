@@ -18,7 +18,7 @@ function Login() {
       setError('');
       localStorage.setItem('user', JSON.stringify(response.data.user)); // Save user info
       setTimeout(() => {
-        navigate('/admin-dashboard'); // Redirect to the Admin Dashboard
+        navigate('/AdminDashboard'); // Redirect to the Admin Dashboard
       }, 2000);
     } catch (error) {
       setMessage('');

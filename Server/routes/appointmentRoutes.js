@@ -1,36 +1,56 @@
-const express = require('express');
+const express = require("express");
+const Appointment = require("../models/Appointment");
 const router = express.Router();
-const Appointment = require('../models/Appointment'); // Ensure this matches your schema
+const moment = require("moment"); // Optional: If you want to format dates
+const Service = require("../models/Service"); // Assuming this is the service model
 
-// Create a new appointment
-router.post('/', async (req, res) => {
-  const { customer_name, customer_contact, service, date, time, userId } = req.body; // Include userId if logged-in users are booking
+// Add Appointment
+router.post("/add", async (req, res) => {
   try {
-    const newAppointment = new Appointment({ 
-      customer_name, 
-      customer_contact, 
-      service, 
-      date, 
-      time, 
-      userId // Save userId for user-specific appointments
+    const { customerName, contactNumber, service, appointmentDate, appointmentTime } = req.body;
+    
+    // Validate the presence of all required fields
+    if (!customerName || !contactNumber || !service || !appointmentDate || !appointmentTime) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+
+    const appointment = new Appointment({
+      customerName,
+      contactNumber,
+      service,
+      appointmentDate,
+      appointmentTime,
     });
-    await newAppointment.save();
-    res.status(201).json({ message: 'Appointment booked successfully', appointment: newAppointment });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+
+    await appointment.save();
+    res.status(201).json({ message: "Appointment booked successfully." });
+  } catch (error) {
+    console.error("Error booking appointment:", error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-// Get today's appointments
-router.get('/today', async (req, res) => {
-  const today = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+
+// Fetch today's appointments
+router.get("/today", async (req, res) => {
   try {
-    const appointments = await Appointment.find({ date: today }).populate('userId').populate('service'); 
-    // Replace 'userId' and 'service' with your actual populated fields if models are referenced
-    res.status(200).json(appointments);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const today = moment().format("YYYY-MM-DD");
+    const appointments = await Appointment.find({
+      appointmentDate: today,
+    })
+    .populate("service", "name")
+    .select("customerName contactNumber appointmentTime service appointmentDate status");
+
+    if (appointments.length === 0) {
+      console.log("No appointments found for today");
+    }
+
+    res.json(appointments);
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    res.status(500).json({ message: "Error fetching appointments" });
   }
 });
+
 
 module.exports = router;

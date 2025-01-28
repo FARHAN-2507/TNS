@@ -1,28 +1,50 @@
-import React from 'react';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Services from './pages/Services';
 import Navbar from './components/Navbar';
-import BookAppointment from './pages/BookAppointment';
-import AdminDashboard from './pages/AdminDashboard';
-import Home from './pages/home';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+import AppointmentsCard from './components/AppointmentsCard';
+import ServicesCard from './components/ServicesCard';
+import StaffAttendanceCard from './components/StaffAttendanceCard';
 
+
+
+
+
+
+// Lazy load other components for performance
+const Login = React.lazy(() => import('./pages/Login'));
+const Register = React.lazy(() => import('./pages/Register'));
+const Services = React.lazy(() => import('./pages/Services'));
+const CategoryDetails = React.lazy(() => import('./pages/CategoryDetails'));
+const BookAppointment = React.lazy(() => import('./pages/BookAppointment'));
+const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
 
 function App() {
   return (
     <Router>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/" element={<Services />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        
-        <Route path="/book-appointment" element={<BookAppointment />} />;
-        <Route path="/admin" element={<AdminDashboard />} />
-      </Routes>
+      <Suspense fallback={<div className="text-center mt-5">Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/services/:serviceName" element={<CategoryDetails />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/book-appointment" element={<BookAppointment />} />
+          <Route path="/admindashboard" element={<AdminDashboard />} />
+          <Route path="/appointments" element={<AppointmentsCard  />} />
+          <Route path="/servicescard" element={<ServicesCard />} />
+          <Route path="/staffattendancecard" element={<StaffAttendanceCard />} />
+          
+          
+
+
+          {/* Catch-all route for invalid paths */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </Router>
   );
 }

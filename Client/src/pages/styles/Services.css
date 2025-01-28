@@ -1,0 +1,27 @@
+/* Custom CSS for styling */
+.banner img {
+    object-fit: cover;
+    height: 300px;
+  }
+  
+  .card {
+    border-radius: 10px;
+  }
+  
+  .card-img-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .btn-primary {
+    background-color: #6c63ff;
+    border-color: #6c63ff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #5849d1;
+    border-color: #5849d1;
+  }
+  

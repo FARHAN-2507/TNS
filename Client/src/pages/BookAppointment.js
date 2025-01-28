@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function BookAppointment() {
   const [services, setServices] = useState([]);
-  const [selectedService, setSelectedService] = useState('');
-  const [appointmentDate, setAppointmentDate] = useState('');
-  const [userId, setUserId] = useState(''); // Fetch this from logged-in user data
+  const [selectedService, setSelectedService] = useState("");
+  const [appointmentDate, setAppointmentDate] = useState("");
+  const [appointmentTime, setAppointmentTime] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [customerName, setCustomerName] = useState("");
 
   useEffect(() => {
     const fetchServices = async () => {
-      const response = await axios.get('http://localhost:5000/api/services');
+      const response = await axios.get("http://localhost:5000/api/services");
       setServices(response.data);
     };
 
@@ -19,15 +21,32 @@ function BookAppointment() {
   const handleAppointmentBooking = async (e) => {
     e.preventDefault();
 
+    // Ensure all required fields are provided
+    if (!customerName || !contactNumber || !selectedService || !appointmentDate || !appointmentTime) {
+      alert("Please fill all fields.");
+      return;
+    }
+
     try {
-      const response = await axios.post('http://localhost:5000/api/appointments', {
-        serviceId: selectedService,
-        date: appointmentDate,
-        userId, // Use user ID from the logged-in session
+      // Log the data being sent for debugging
+    console.log({
+      customerName,
+      contactNumber,
+      service: selectedService,
+      appointmentDate,
+      appointmentTime,
+    });
+      // Send the data to the backend API
+      const response = await axios.post("http://localhost:5000/api/appointments/add", {
+        customerName,
+        contactNumber,
+        service: selectedService,
+        appointmentDate,
+        appointmentTime,
       });
-      alert('Appointment booked successfully!');
+      alert("We will call you later to confirm the appointment.");
     } catch (error) {
-      console.error('Error booking appointment:', error.response.data);
+      console.error("Error booking appointment:", error.response ? error.response.data : error);
     }
   };
 
@@ -35,6 +54,26 @@ function BookAppointment() {
     <div className="container mt-5">
       <h2>Book Appointment</h2>
       <form onSubmit={handleAppointmentBooking}>
+        <div className="mb-3">
+          <label>Name</label>
+          <input
+            type="text"
+            className="form-control"
+            value={customerName}
+            onChange={(e) => setCustomerName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label>Contact Number</label>
+          <input
+            type="text"
+            className="form-control"
+            value={contactNumber}
+            onChange={(e) => setContactNumber(e.target.value)}
+            required
+          />
+        </div>
         <div className="mb-3">
           <label>Select Service</label>
           <select
@@ -58,6 +97,16 @@ function BookAppointment() {
             className="form-control"
             value={appointmentDate}
             onChange={(e) => setAppointmentDate(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label>Appointment Time</label>
+          <input
+            type="time"
+            className="form-control"
+            value={appointmentTime}
+            onChange={(e) => setAppointmentTime(e.target.value)}
             required
           />
         </div>

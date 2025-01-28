@@ -1,10 +1,32 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+
 
 const appointmentSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },  // Reference to User
-  date: { type: Date, required: true },
-  service: { type: String, required: true },
-  status: { type: String, default: 'pending' },  // pending, completed, canceled
+  customerName: {
+    type: String,
+    required: true,
+  },
+  contactNumber: {
+    type: String,
+    required: true,  // Ensure contactNumber is required
+  },
+  service: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Service",
+    required: true,
+  },
+  appointmentDate: {
+    type: Date,
+    required: true, // Ensure appointmentDate is provided
+  },
+  appointmentTime: {
+    type: String,
+    required: true, // Ensure appointmentTime is required
+  },
+  status: {
+    type: String,
+    enum: ["pending", "completed", "cancelled"],
+    default: "pending",
+  },
 });
-
-module.exports = mongoose.model('Appointment', appointmentSchema);
+module.exports = mongoose.model("Appointment", appointmentSchema);
