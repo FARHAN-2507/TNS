@@ -15,24 +15,33 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
 
   // Fetch all staff
+
   const fetchStaff = async () => {
     try {
       const response = await axios.get(`${apiPath}/`);
-      setStaffList(response.data);
+      const uniqueStaff = Array.from(new Map(response.data.map(staff => [staff.staffId, staff])).values());
+      setStaffList(uniqueStaff);
     } catch (error) {
       console.error("Error fetching staff:", error);
     }
   };
 
+
+
   // Fetch attendance data by date
   const fetchAttendance = async (date) => {
     try {
-      const response = await axios.get(`${apiPath}?date=${date}`);
-      setAttendance(response.data);
+      const response = await axios.get(`${apiPath}/?date=${date}`);
+      if (response.data && response.data.length > 0) {
+        setAttendance(response.data);
+      } else {
+        setAttendance([]); // Set empty array if no data
+      }
     } catch (error) {
       console.error("Error fetching attendance:", error);
     }
   };
+
 
   // Add new staff
   const addStaff = async () => {
@@ -47,7 +56,7 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
       const response = await axios.post(`${apiPath}/staff`, newStaff);
       if (response.status === 201) {
         alert("Staff added successfully");
-        setNewStaff({ staffId: "", staffName: "", email: "", contact: "" });
+        setNewStaff({ staffId: "", staffName: "", });
         fetchStaff();
       } else {
         alert(response.data.message || "Error adding staff");
@@ -61,21 +70,21 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
   // Save attendance
   const saveAttendance = async () => {
     try {
-      const formattedAttendance = Object.entries(attendanceRecord)
-        .map(([staffId, status]) => {
-          const staff = staffList.find(staff => staff.staffId === staffId);
-          if (!staff) {
-            return null;
-          }
+      const uniqueAttendance = new Map();
 
-          return {
+      Object.entries(attendanceRecord).forEach(([staffId, status]) => {
+        const staff = staffList.find(staff => staff.staffId === staffId);
+        if (staff) {
+          uniqueAttendance.set(staffId, {
             staffId,
             staffName: staff.staffName,
             status,
             date: selectedDate,
-          };
-        })
-        .filter(Boolean);
+          });
+        }
+      });
+
+      const formattedAttendance = Array.from(uniqueAttendance.values());
 
       if (formattedAttendance.length > 0) {
         await axios.post(`${apiPath}/attendance/mark`, formattedAttendance);
@@ -86,16 +95,28 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
 
         // Fetch fresh attendance data
         fetchAttendance(selectedDate);
-
       } else {
         alert("No valid attendance records to save.");
       }
     } catch (error) {
       console.error("Error saving attendance:", error);
-      alert("Error saving attendance. Please try again.");
+      alert("Already Marked for Today.");
     }
   };
+  // Handle attendance status change
+  // Handle view changes and fetch data accordingly
+  useEffect(() => {
+    if (view === "mark") {
+      fetchStaff();  // Fetch staff immediately when opening "Mark Attendance"
+    }
+    if (view === "fetch") {
+      fetchAttendance(selectedDate);
+    }
+  }, [view, selectedDate]);
 
+
+
+  // Handle attendance status change
   const handleAttendanceChange = (staffId, status) => {
     setAttendanceRecord(prevState => ({
       ...prevState,
@@ -103,11 +124,7 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
     }));
   };
 
-  // Handle view changes and fetch data accordingly
-  useEffect(() => {
-    if (view === "mark") fetchStaff();
-    if (view === "fetch") fetchAttendance(selectedDate);
-  }, [view, selectedDate]);
+
 
   return (
     <div className={`card border-${color} mb-4 shadow`}>
@@ -157,8 +174,8 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
           <div>
             <h5>Mark Attendance</h5>
             <form>
-              {staffList.map(staff => (
-                <div key={staff.staffId}>
+              {staffList.map((staff, index) => (
+                <div key={staff.staffId || index}>
                   <span>{staff.staffName}</span>
                   <input
                     type="radio"

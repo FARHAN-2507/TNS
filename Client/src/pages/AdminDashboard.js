@@ -21,7 +21,7 @@ const AdminDashboard = () => {
       title: "Manage Services",
       description: "Add, update, or delete services offered.",
       color: "success",
-      path: "/services",
+      path: "/servicesCard",
     },
   ];
 
