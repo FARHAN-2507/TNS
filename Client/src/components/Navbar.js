@@ -1,21 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo1 from '../assets/logo1.png'; // Adjust the path if necessary
-import './Navbar.css'; // Custom CSS for styling
-import Button from 'react-bootstrap/Button';
+import logo1 from '../assets/LOGO1.png';
+import './styles/Navbar.css';
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-      <div className="container">
+    <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+      <div className="container-fluid container-lg">
         {/* Logo */}
         <Link className="navbar-brand" to="/">
-          <img src={logo1} alt="Salon Logo" className="navbar-logo" />
+          <img 
+            src={logo1} 
+            alt="Salon Logo" 
+            className="navbar-logo me-2" 
+          />
+          
         </Link>
 
-        {/* Toggle Button for Mobile */}
+        {/* Mobile Toggle Button */}
         <button
-          className="navbar-toggler"
+          className="navbar-toggler custom-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
@@ -28,30 +32,28 @@ function Navbar() {
 
         {/* Navbar Links */}
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/Services">
+          <ul className="navbar-nav ms-auto align-items-lg-center">
+            <li className="nav-item mx-2">
+              <Link className="nav-link position-relative" to="/Services">
                 Services
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/">
+            <li className="nav-item mx-2">
+              <Link className="nav-link position-relative" to="/gallery">
                 Gallery
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/">
+            <li className="nav-item mx-2">
+              <Link className="nav-link position-relative" to="/about">
                 About Us
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/book-appointment">
-                Book Appointment
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/login">
-                <Button variant="outline-danger">Admin</Button>
+            <li className="nav-item mx-2">
+              <Link 
+                className="nav-link cta-button" 
+                to="/book-appointment"
+              >
+                Book Now
               </Link>
             </li>
           </ul>

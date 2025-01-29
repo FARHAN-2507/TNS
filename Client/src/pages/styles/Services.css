@@ -1,27 +1,76 @@
-/* Custom CSS for styling */
-.banner img {
-    object-fit: cover;
-    height: 300px;
+/* Services.css */
+.hero-banner {
+  height: 60vh;
+  overflow: hidden;
+}
+
+.hero-banner img {
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.hero-content {
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.service-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 1rem;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.service-image {
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-image {
+  transform: scale(1.05);
+}
+
+.category-badge .badge {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.btn-outline-primary {
+  border-color: #e9ecef;
+  color: #495057;
+}
+
+.btn-outline-primary:hover {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+}
+
+.service-meta {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    height: 50vh;
   }
   
-  .card {
-    border-radius: 10px;
+  .hero-content h1 {
+    font-size: 2rem;
   }
   
-  .card-img-top {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    height: 200px;
-    object-fit: cover;
+  .hero-content p {
+    font-size: 1rem;
   }
   
-  .btn-primary {
-    background-color: #6c63ff;
-    border-color: #6c63ff;
+  .category-filter .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
   }
-  
-  .btn-primary:hover {
-    background-color: #5849d1;
-    border-color: #5849d1;
-  }
-  
+}
