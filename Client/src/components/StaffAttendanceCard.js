@@ -15,7 +15,6 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
 
   // Fetch all staff
-
   const fetchStaff = async () => {
     try {
       const response = await axios.get(`${apiPath}/`);
@@ -25,8 +24,6 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
       console.error("Error fetching staff:", error);
     }
   };
-
-
 
   // Fetch attendance data by date
   const fetchAttendance = async (date) => {
@@ -42,7 +39,6 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
     }
   };
 
-
   // Add new staff
   const addStaff = async () => {
     const { staffId, staffName } = newStaff;
@@ -56,7 +52,7 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
       const response = await axios.post(`${apiPath}/staff`, newStaff);
       if (response.status === 201) {
         alert("Staff added successfully");
-        setNewStaff({ staffId: "", staffName: "", });
+        setNewStaff({ staffId: "", staffName: "" });
         fetchStaff();
       } else {
         alert(response.data.message || "Error adding staff");
@@ -103,7 +99,15 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
       alert("Already Marked for Today.");
     }
   };
+
   // Handle attendance status change
+  const handleAttendanceChange = (staffId, status) => {
+    setAttendanceRecord(prevState => ({
+      ...prevState,
+      [staffId]: status,
+    }));
+  };
+
   // Handle view changes and fetch data accordingly
   useEffect(() => {
     if (view === "mark") {
@@ -114,33 +118,27 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
     }
   }, [view, selectedDate]);
 
-
-
-  // Handle attendance status change
-  const handleAttendanceChange = (staffId, status) => {
-    setAttendanceRecord(prevState => ({
-      ...prevState,
-      [staffId]: status,
-    }));
-  };
-
-
-
   return (
-    <div className={`card border-${color} mb-4 shadow`}>
+    <div className={`card border-${color} mb-4 shadow-lg`}>
+             <div style={{ marginTop: '25px' }}></div>
+
       <div style={{ marginTop: '70px' }}></div>
 
-      <div className={`card-header bg-${color} text-white`}>{title}</div>
+      <div className={`card-header bg-${color} text-white`}>
+        <h4>{title}</h4>
+      </div>
       <div className="card-body">
         <p>{description}</p>
+
+        {/* Action Buttons */}
         <div className="mb-3 d-flex justify-content-between">
-          <button className="btn btn-primary" onClick={() => setView("add")}>
+          <button className="btn btn-primary btn-lg" onClick={() => setView("add")}>
             Add Staff
           </button>
-          <button className="btn btn-secondary" onClick={() => setView("mark")}>
+          <button className="btn btn-secondary btn-lg" onClick={() => setView("mark")}>
             Mark Attendance
           </button>
-          <button className="btn btn-success" onClick={() => setView("fetch")}>
+          <button className="btn btn-success btn-lg" onClick={() => setView("fetch")}>
             Fetch Data
           </button>
         </div>
@@ -149,21 +147,25 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
         {view === "add" && (
           <div>
             <h5>Add Staff</h5>
-            <input
-              type="text"
-              placeholder="Enter staff ID"
-              className="form-control mb-2"
-              value={newStaff.staffId}
-              onChange={(e) => setNewStaff({ ...newStaff, staffId: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Enter staff name"
-              className="form-control mb-2"
-              value={newStaff.staffName}
-              onChange={(e) => setNewStaff({ ...newStaff, staffName: e.target.value })}
-            />
-            <button className="btn btn-success" onClick={addStaff}>
+            <div className="form-group">
+              <input
+                type="text"
+                className="form-control mb-2"
+                placeholder="Enter staff ID"
+                value={newStaff.staffId}
+                onChange={(e) => setNewStaff({ ...newStaff, staffId: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="text"
+                className="form-control mb-2"
+                placeholder="Enter staff name"
+                value={newStaff.staffName}
+                onChange={(e) => setNewStaff({ ...newStaff, staffName: e.target.value })}
+              />
+            </div>
+            <button className="btn btn-success btn-lg" onClick={addStaff}>
               Add Staff
             </button>
           </div>
@@ -174,31 +176,37 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
           <div>
             <h5>Mark Attendance</h5>
             <form>
-              {staffList.map((staff, index) => (
-                <div key={staff.staffId || index}>
+              {staffList.map((staff) => (
+                <div key={staff.staffId} className="mb-3 d-flex justify-content-between">
                   <span>{staff.staffName}</span>
-                  <input
-                    type="radio"
-                    name={`attendance-${staff.staffId}`}
-                    value="Present"
-                    checked={attendanceRecord[staff.staffId] === "Present"}
-                    onChange={() => handleAttendanceChange(staff.staffId, "Present")}
-                  />
-                  Present
-                  <input
-                    type="radio"
-                    name={`attendance-${staff.staffId}`}
-                    value="Absent"
-                    checked={attendanceRecord[staff.staffId] === "Absent"}
-                    onChange={() => handleAttendanceChange(staff.staffId, "Absent")}
-                  />
-                  Absent
+                  <div>
+                    <label className="mr-2">
+                      <input
+                        type="radio"
+                        name={`attendance-${staff.staffId}`}
+                        value="Present"
+                        checked={attendanceRecord[staff.staffId] === "Present"}
+                        onChange={() => handleAttendanceChange(staff.staffId, "Present")}
+                      />
+                      Present
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name={`attendance-${staff.staffId}`}
+                        value="Absent"
+                        checked={attendanceRecord[staff.staffId] === "Absent"}
+                        onChange={() => handleAttendanceChange(staff.staffId, "Absent")}
+                      />
+                      Absent
+                    </label>
+                  </div>
                 </div>
               ))}
 
               <button
                 type="button"
-                className="btn btn-warning mt-3"
+                className="btn btn-warning btn-lg mt-3"
                 onClick={saveAttendance}
               >
                 Save Attendance
@@ -211,13 +219,15 @@ const StaffAttendanceCard = ({ apiPath = "http://localhost:5000/api/attendance",
         {view === "fetch" && (
           <div>
             <h5>Fetch Attendance Records</h5>
-            <input
-              type="date"
-              className="form-control mb-3"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-            />
-            <table className="table">
+            <div className="form-group">
+              <input
+                type="date"
+                className="form-control mb-3"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+              />
+            </div>
+            <table className="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th>Name</th>

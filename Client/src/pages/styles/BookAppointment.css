@@ -1,0 +1,153 @@
+:root {
+    --primary-color: #f13285;
+    --secondary-color: #ffe5ec;
+    --accent-color: #ffafcc;
+  }
+  
+  .booking-container {
+    background-color: #fff9fb;
+  }
+  
+  .banner {
+    height: 400px;
+    background-image: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .form-wrapper {
+    margin-top: -100px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .booking-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+  }
+  
+  .form-title {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .form-label {
+    color: #6c757d;
+    font-weight: 500;
+  }
+  
+  .icon {
+    color: var(--primary-color);
+    margin-right: 8px;
+  }
+  
+  .input-field {
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .input-field:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px rgba(255, 126, 182, 0.2);
+  }
+  
+  .submit-btn {
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    border: none;
+    width: 100%;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+  
+  .submit-btn:hover {
+    background: var(--accent-color);
+    transform: translateY(-2px);
+  }
+  
+  .date-picker::-webkit-calendar-picker-indicator,
+  .time-picker::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.6;
+    filter: invert(0.5);
+  }
+  
+  .input-group-text {
+    background: var(--secondary-color);
+    border: none;
+    color: var(--primary-color);
+  }
+
+
+.contact-us {
+  padding: 50px 0;
+  text-align: left;
+}
+
+.contact-us h2 {
+  color: var(--primary-color);
+  font-weight:900;
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.contact-us h4 {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.contact-us p {
+  color: #6c757d;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.contact-us iframe {
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .contact-us {
+    padding: 30px 15px;
+  }
+}
+
+  
+  @media (max-width: 768px) {
+    .banner {
+      height: 300px;
+    }
+    
+    .form-wrapper {
+      margin-top: -50px;
+    }
+  }

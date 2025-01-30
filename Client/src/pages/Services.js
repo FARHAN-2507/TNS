@@ -5,6 +5,8 @@ import '../pages/styles/Services.css';
 import Sb1 from '../assets/Sb1.png';
 import { FiClock, FiArrowRight } from 'react-icons/fi';
 import { FaRupeeSign } from "react-icons/fa";
+import Footer from "../components/Footer";
+
 
 const ServicesPage = () => {
   const [services, setServices] = useState([]);
@@ -130,6 +132,7 @@ const ServicesPage = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

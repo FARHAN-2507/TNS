@@ -44,7 +44,7 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item mx-2">
-              <Link className="nav-link position-relative" to="/about">
+              <Link className="nav-link position-relative" to="/aboutus">
                 About Us
               </Link>
             </li>

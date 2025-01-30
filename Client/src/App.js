@@ -8,7 +8,7 @@ import NotFound from './pages/NotFound';
 import AppointmentsCard from './components/AppointmentsCard';
 import ServicesCard from './components/ServicesCard';
 import StaffAttendanceCard from './components/StaffAttendanceCard';
-
+import AboutUs from './pages/AboutUs';
 
 
 
@@ -38,6 +38,7 @@ function App() {
           <Route path="/appointments" element={<AppointmentsCard  />} />
           <Route path="/servicescard" element={<ServicesCard />} />
           <Route path="/staffattendancecard" element={<StaffAttendanceCard />} />
+          <Route path="/aboutus" element={<AboutUs />} />
           
           
 

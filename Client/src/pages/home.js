@@ -85,7 +85,7 @@ function Home() {
             luxurious experience. We use only premium products and stay updated with 
             the latest trends through continuous education."
           </p>
-          <button className="btn btn-dark btn-lg" onClick={() => window.location.href='/about'}>Read Full Story</button>
+          <button className="btn btn-dark btn-lg" onClick={() => window.location.href='/aboutus'}>Read Full Story</button>
             </div>
             <div className="col-md-6">
           <div className="ratio ratio-1x1">
