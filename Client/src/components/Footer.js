@@ -30,7 +30,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/about" className="text-light">
+                <a href="/aboutus" className="text-light">
                   About Us
                 </a>
               </li>

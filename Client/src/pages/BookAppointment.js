@@ -21,10 +21,11 @@ function BookAppointment() {
 
   const handleAppointmentBooking = async (e) => {
     e.preventDefault();
-    if (!customerName || !contactNumber || !selectedService || !appointmentDate || !appointmentTime) {
-      alert("Please fill all fields.");
+    if (!customerName || !contactNumber || !selectedService || !appointmentDate || !appointmentTime || contactNumber.length !== 10) {
+      alert("Please fill all fields correctly. Contact number must be 10 digits.");
       return;
     }
+
 
     try {
       await axios.post("http://localhost:5000/api/appointments/add", {
@@ -34,7 +35,7 @@ function BookAppointment() {
         appointmentDate,
         appointmentTime,
       });
-      alert("We will call you later to confirm the appointment.");
+      alert("Sucess !!! .. We'll call back you later to confirm the appointment.");
     } catch (error) {
       console.error("Error booking appointment:", error.response ? error.response.data : error);
     }
@@ -64,7 +65,16 @@ function BookAppointment() {
               <div className="col-md-6">
                 <div className="form-group">
                   <label>Contact Number</label>
-                  <input type="text" className="form-control" value={contactNumber} onChange={(e) => setContactNumber(e.target.value)} required />
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={contactNumber}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^\d{0,10}$/.test(value)) setContactNumber(value);
+                    }}
+                    required
+                  />
                 </div>
               </div>
             </div>
@@ -83,7 +93,14 @@ function BookAppointment() {
               <div className="col-md-6">
                 <div className="form-group">
                   <label>Date</label>
-                  <input type="date" className="form-control" value={appointmentDate} onChange={(e) => setAppointmentDate(e.target.value)} required />
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={appointmentDate}
+                    min={new Date().toISOString().split("T")[0]}
+                    onChange={(e) => setAppointmentDate(e.target.value)}
+                    required
+                  />
                 </div>
               </div>
               <div className="col-md-6">

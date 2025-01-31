@@ -8,7 +8,7 @@ import owner2 from '../assets/owner2.JPG';
 import emp1 from '../assets/emp1.jpg';
 import emp2 from '../assets/emp2.jpg';
 import emp3 from '../assets/emp3.jpg';
-
+import about from '../assets/about.jpg';
 
 
 const AboutUs = () => {
@@ -19,7 +19,7 @@ const AboutUs = () => {
         <div className="container-fluid p-0">
           <div className="hero-image position-relative">
             <img 
-              src="https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+              src={about} 
               alt="Salon Interior" 
               className="img-fluid"
             />

@@ -11,14 +11,13 @@ import StaffAttendanceCard from './components/StaffAttendanceCard';
 import AboutUs from './pages/AboutUs';
 import Gallery from './pages/Gallery';
 import UploadPage from "./pages/UploadPage";
-
+import WhatsAppButton from "./components/WhatsAppButton";
 
 
 // Lazy load other components for performance
 const Login = React.lazy(() => import('./pages/Login'));
 const Register = React.lazy(() => import('./pages/Register'));
 const Services = React.lazy(() => import('./pages/Services'));
-const CategoryDetails = React.lazy(() => import('./pages/CategoryDetails'));
 const BookAppointment = React.lazy(() => import('./pages/BookAppointment'));
 const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
 
@@ -30,7 +29,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/services/:serviceName" element={<CategoryDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/book-appointment" element={<BookAppointment />} />
@@ -45,6 +43,7 @@ function App() {
           {/* Catch-all route for invalid paths */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <WhatsAppButton />
       </Suspense>
     </Router>
   );
