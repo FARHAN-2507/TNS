@@ -8,7 +8,7 @@ const userRoutes = require('./routes/userRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const attendanceRoutes = require('./routes/attendanceRoutes');
-
+const uploadRoutes = require('./routes/uploadRoutes');
 // Initialize app
 dotenv.config();
 const app = express();
@@ -18,7 +18,7 @@ app.use(express.json());
 // MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
+  .then(() => console.log('MongoDB atlas connected'))
   .catch((err) => console.log(err));
 
 // File upload setup
@@ -41,7 +41,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/attendance', attendanceRoutes);
-// app.use('/api/staff', attendanceRoutes);
+app.use('/api',uploadRoutes);
 
 // Route to handle file uploads
 app.post('/api/upload', upload.single('image'), (req, res) => {

@@ -9,8 +9,8 @@ import AppointmentsCard from './components/AppointmentsCard';
 import ServicesCard from './components/ServicesCard';
 import StaffAttendanceCard from './components/StaffAttendanceCard';
 import AboutUs from './pages/AboutUs';
-
-
+import Gallery from './pages/Gallery';
+import UploadPage from "./pages/UploadPage";
 
 
 
@@ -39,9 +39,8 @@ function App() {
           <Route path="/servicescard" element={<ServicesCard />} />
           <Route path="/staffattendancecard" element={<StaffAttendanceCard />} />
           <Route path="/aboutus" element={<AboutUs />} />
-          
-          
-
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/uploadpage" element={<UploadPage />} />
 
           {/* Catch-all route for invalid paths */}
           <Route path="*" element={<NotFound />} />

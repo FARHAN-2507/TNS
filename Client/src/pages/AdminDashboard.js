@@ -23,6 +23,12 @@ const AdminDashboard = () => {
       path: "/servicesCard",
       icon: "bi-tools",
     },
+    {
+      title: "Manage gallary",
+      color: "danger",
+      path: "/Uploadpage",
+      icon: "bi-images",
+    },
   ];
 
   return (
