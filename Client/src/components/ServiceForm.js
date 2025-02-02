@@ -102,7 +102,7 @@ const ServiceForm = () => {
               >
                 <option value="">Select a category</option>
                 <option value="Hair">Hair</option>
-                <option value="Nails">Nails</option>
+                <option value="Packages">Packages</option>
                 <option value="Makeup">Makeup</option>
                 <option value="Facial">Facial</option>
                 <option value="Skin">Skin</option>

@@ -10,7 +10,7 @@ import Footer from "../components/Footer";
 
 const ServicesPage = () => {
   const [services, setServices] = useState([]);
-  const [categories] = useState(['Hair', 'Skin', 'Nails', 'Makeup', 'Facial']);
+  const [categories] = useState(['Hair', 'Skin', 'Packages', 'Makeup', 'Facial']);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [error, setError] = useState(null);
   const navigate = useNavigate();

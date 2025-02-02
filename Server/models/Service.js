@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Categories array (add or modify categories as needed)
-const categories = ['Hair', 'Nails', 'Makeup', 'Facial', 'Skin' ];
+const categories = ['Hair', 'Packages', 'Makeup', 'Facial', 'Skin' ];
 
 const serviceSchema = new mongoose.Schema({
   name: {
